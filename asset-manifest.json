@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.f855e6bc.css",
+    "main.js": "/static/js/main.aa7234f9.js",
+    "static/js/453.cbd2b23e.chunk.js": "/static/js/453.cbd2b23e.chunk.js",
+    "static/media/blood-donation.png": "/static/media/blood-donation.9c8e384b4edd0e5b8007.png",
+    "index.html": "/index.html",
+    "main.f855e6bc.css.map": "/static/css/main.f855e6bc.css.map",
+    "main.aa7234f9.js.map": "/static/js/main.aa7234f9.js.map",
+    "453.cbd2b23e.chunk.js.map": "/static/js/453.cbd2b23e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.aa7234f9.js"
+  ]
+}
