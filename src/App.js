@@ -1,16 +1,25 @@
 import React from 'react';
 import './App.css';
+import logo from './assets/logo.png';  // Adjust the path as needed
 import DonationsForm from './DonationsForm';  // Import the DonationsForm component
-import logo from './assets/blood-donation.png';  // Adjust the path as needed
+import DonorForm from './DonorForm';
+import RequestForm from './RequestForm';
+import InventoryForm from './InventoryForm';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <h1>Blood Donation Form</h1>  {/* Title for the page */}
-        <DonationsForm />  {/* Render the DonationsForm component */}
+        <h1>Blood Donation Management System</h1>  {/* Title for the page */}
       </header>
+
+      <div className="forms-container">
+        <DonorForm />
+        <DonationsForm />
+        <RequestForm />
+        <InventoryForm />
+      </div>
     </div>
   );
 }

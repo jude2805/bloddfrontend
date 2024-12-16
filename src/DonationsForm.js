@@ -9,31 +9,7 @@ function DonationsForm() {
     const [inventory, setInventory] = useState(0);
     const [donorExists, setDonorExists] = useState(false);
 
-    // Fetch donor info based on donor ID
-    const handleDonorIdChange = async (e) => {
-        setDonorId(e.target.value);
-        const response = await fetch(`http://localhost:3001/donors/${e.target.value}`);
-        if (response.ok) {
-            const donor = await response.json();
-            setDonorInfo(donor);
-            setDonorExists(true);
-        } else {
-            setDonorExists(false);
-        }
-    };
-
-    // Fetch available inventory based on the blood group
-    const handleBloodGroupChange = async (e) => {
-        setBloodGroup(e.target.value);
-        const response = await fetch(`http://localhost:3003/inventory/${e.target.value}`);
-        if (response.ok) {
-            const inventoryData = await response.json();
-            setInventory(inventoryData.quantity);
-        } else {
-            setInventory(0);
-        }
-    };
-
+    // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -54,16 +30,45 @@ function DonationsForm() {
             donation_date: donationDate,
         };
 
-        // Call the Blood Donation Service to register the donation
-        const response = await fetch('http://localhost:3002/donations', {
+        // Make the POST request to register the donation
+        const response = await fetch('https://donationapp-crf8cwfpe8f7dqdz.canadacentral-01.azurewebsites.net/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(donation),
         });
 
-        const result = await response.json();
-        console.log(result);
-        alert('Donation registered successfully!');
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result);
+            alert('Donation registered successfully!');
+        } else {
+            alert('Failed to register donation!');
+        }
+    };
+
+    // Fetch donor info based on donor ID
+    const handleDonorIdChange = async (e) => {
+        setDonorId(e.target.value);
+        const response = await fetch('https://donationapp-crf8cwfpe8f7dqdz.canadacentral-01.azurewebsites.net/');
+        if (response.ok) {
+            const donor = await response.json();
+            setDonorInfo(donor);
+            setDonorExists(true);
+        } else {
+            setDonorExists(false);
+        }
+    };
+
+    // Fetch available inventory based on the blood group
+    const handleBloodGroupChange = async (e) => {
+        setBloodGroup(e.target.value);
+        const response = await fetch('https://inventoryapp-ghhnaub4ehcvd7d0.canadacentral-01.azurewebsites.net/');
+        if (response.ok) {
+            const inventoryData = await response.json();
+            setInventory(inventoryData.quantity);
+        } else {
+            setInventory(0);
+        }
     };
 
     return (
@@ -71,13 +76,13 @@ function DonationsForm() {
             <input
                 type="text"
                 value={donorId}
-                onChange={handleDonorIdChange}
+                onChange={handleDonorIdChange} // Only use handleDonorIdChange here
                 placeholder="Donor ID"
             />
             <input
                 type="text"
                 value={bloodGroup}
-                onChange={handleBloodGroupChange}
+                onChange={handleBloodGroupChange} // Only use handleBloodGroupChange here
                 placeholder="Blood Group"
             />
             <input
@@ -93,22 +98,15 @@ function DonationsForm() {
             />
             <button type="submit">Submit Donation</button>
 
-            {/* Display Donor Information */}
+            {/* Display Donor Information if donor exists */}
             {donorExists && (
                 <div>
-                    <h3>Donor Information</h3>
+                    <h3>Donor Info:</h3>
                     <p>Name: {donorInfo.name}</p>
-                    <p>Blood Group: {donorInfo.blood_group}</p>
-                    <p>Last Donation: {donorInfo.last_donation_date}</p>
+                    <p>Email: {donorInfo.email}</p>
+                    <p>Blood Group: {donorInfo.bloodGroup}</p>
                 </div>
             )}
-
-            {/* Display Inventory Info */}
-            <div>
-                <h3>Available Inventory</h3>
-                <p>Blood Group: {bloodGroup}</p>
-                <p>Quantity Available: {inventory}</p>
-            </div>
         </form>
     );
 }
